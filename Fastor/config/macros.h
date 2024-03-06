@@ -161,7 +161,14 @@ SOFTWARE.
 //------------------------------------------------------------------------------------------------//
 namespace Fastor {
 // Strong unconditional assert
-FASTOR_INLINE void FASTOR_EXIT_ASSERT(bool cond, const std::string &msg="") {
+FASTOR_INLINE void FASTOR_EXIT_ASSERT(bool cond, const std::string &msg) {
+    if (cond==false) {
+        throw std::runtime_error(msg);
+    }
+}
+
+// Strong unconditional assert with const char* to avoid heap allocation of std::string
+FASTOR_INLINE void FASTOR_EXIT_ASSERT(bool cond, const char* msg="") {
     if (cond==false) {
         throw std::runtime_error(msg);
     }
@@ -174,7 +181,7 @@ FASTOR_INLINE void FASTOR_EXIT_ASSERT(bool cond, const std::string &msg="") {
 #endif
 
 // Warn
-FASTOR_INLINE void FASTOR_WARN(bool cond, const std::string &x) {
+FASTOR_INLINE void FASTOR_WARN(bool cond, const char* x) {
     if (cond==false) {
         std::cout << x << std::endl;
     }
